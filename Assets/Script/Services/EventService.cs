@@ -14,6 +14,7 @@ public class EventService : MonoBehaviour
     {
         _loader = new EventsDataLoader();
         _requestToSend = _loader.GetSavedRequest();
+        Debug.Log("Loaded " + _requestToSend.events.Count + " events");
         _requestToAccumulate = new RequestDTO();
         StartCoroutine(SendRequest());
     }
@@ -24,10 +25,12 @@ public class EventService : MonoBehaviour
         requestToSave.events.AddRange(_requestToSend.events);
         requestToSave.events.AddRange(_requestToAccumulate.events);
         _loader.SaveRequest(requestToSave);
+        Debug.Log("Saved " + requestToSave.events.Count + " events");
     }
 
     public void TrackEvent(string type, string data)
     {
+        Debug.Log("Track: " + type + ": " + data);
         _requestToAccumulate.events.Add(new EventDTO(){ type=type, data=data});
     }
 
@@ -40,6 +43,7 @@ public class EventService : MonoBehaviour
         {
             using(UnityWebRequest request = UnityWebRequest.Post(serverUrl, JsonUtility.ToJson(_requestToSend)))
             {
+                Debug.Log("Try send: " + _requestToSend.events.Count + " events");
                 yield return request.SendWebRequest();
 
                 if(request.result == UnityWebRequest.Result.ConnectionError)
@@ -52,6 +56,7 @@ public class EventService : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Successfully sended " + _requestToSend.events.Count + " events");
                     _requestToSend.events.Clear();
                 }
             }

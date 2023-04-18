@@ -12,7 +12,7 @@ public class EventsDataLoader
         var requestJson = GetRequestJson();
         if(requestJson == EmptyString)
         {
-            Debug.Log("Can't load data from " + FileName);
+            Debug.LogError("Can't load data from " + FileName);
             return new RequestDTO();
         }
         try
@@ -20,7 +20,7 @@ public class EventsDataLoader
             var requestDTO = JsonUtility.FromJson<RequestDTO>(requestJson.ToString());
             if(requestDTO == null)
             {
-                Debug.Log("Can't load data from " + FileName);
+                Debug.LogError("Can't load data from " + FileName);
                 return new RequestDTO();
             }
             else
@@ -30,7 +30,7 @@ public class EventsDataLoader
         }
         catch(System.Exception ex)
         {
-            Debug.Log("Can't load data from " + FileName + ": " + ex);
+            Debug.LogError("Can't load data from " + FileName + ": " + ex);
             return new RequestDTO();
         }
     }
@@ -48,19 +48,19 @@ public class EventsDataLoader
         }
         catch(System.ArgumentException ex)
         {
-            Debug.Log("Can't open file to save inventory data to " + filePath + ": " + ex);
+            Debug.LogError("Can't open file to save inventory data to " + filePath + ": " + ex);
         }
         catch(System.ObjectDisposedException ex)
         {
-            Debug.Log("Can't save inventory data to " + filePath + ": " + ex);
+            Debug.LogError("Can't save inventory data to " + filePath + ": " + ex);
         }
         catch(System.NotSupportedException ex)
         {
-            Debug.Log("Can't save inventory data to " + filePath + ": " + ex);
+            Debug.LogError("Can't save inventory data to " + filePath + ": " + ex);
         }
         catch(System.IO.IOException ex)
         {
-            Debug.Log("Can't save inventory data to " + filePath + ": " + ex);
+            Debug.LogError("Can't save inventory data to " + filePath + ": " + ex);
         }
     }
 
@@ -77,15 +77,15 @@ public class EventsDataLoader
         }
         catch(System.ArgumentException ex)
         {
-            Debug.Log("Can't open file to load inventory data from " + filePath + ": " + ex);
+            Debug.LogError("Can't open file to load inventory data from " + filePath + ": " + ex);
         }
         catch(System.OutOfMemoryException ex)
         {
-            Debug.Log("Can't load inventory data from " + filePath + ": " + ex);
+            Debug.LogError("Can't load inventory data from " + filePath + ": " + ex);
         }
         catch(System.IO.IOException ex)
         {
-            Debug.Log("Can't load inventory data from " + filePath + ": " + ex);
+            Debug.LogError("Can't load inventory data from " + filePath + ": " + ex);
         }
         return requestJson;
     }
